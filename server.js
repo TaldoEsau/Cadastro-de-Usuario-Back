@@ -1,16 +1,18 @@
 import { PrismaClient } from '@prisma/client';
 import express from 'express';
+import cors from 'cors'
 
 const prisma = new PrismaClient();
 
 const app = express();
 app.use(express.json());
+app.use(cors())
 
 app.post('/user', async (req, res) => {
     try {
         await prisma.user.create({
             data: {
-                name: req.body.name,
+                name: req.body.name, 
                 email: req.body.email,
                 age: req.body.age,
             }
@@ -63,7 +65,6 @@ app.delete('/user/:id', async (req, res) => {
         }
     })
 
-    console.log("usuario ", req.params.name, "deletado com sucesso")
 })
 
 app.listen(3000, () => {
